@@ -1,21 +1,12 @@
-<script>
+<script setup>
 import { Book } from "../models/book.js"
-
-export default {
-    props: {
-        book: Book
-    },
-    methods:{
-        deleteBook(id){
-            this.$emit('delete-book', id)
-        }
-    }
-}
+import { defineProps } from 'vue';
+  const props = defineProps({book: Book})
 </script>
 
 <template>
     <div :class="['book-item', { 'book-item--favourite': book.favourite }]">
-        <button class="delete-book book-item__delete" @click="deleteBook(book.id)">
+        <button class="delete-book book-item__delete" @click="$emit('delete-book',book.id)">
             <img src="../assets/delete-button.svg" alt="Delete Book" />
         </button>
         <div class="book-item__cover">
@@ -27,7 +18,7 @@ export default {
             <div class="book-item__data">
                 <p class="book-item__year"><b>Year:</b> {{ book.year }}</p>
                 <p class="book-item__pages"><b>Pages:</b> {{ book.pages }}</p>
-                <p class="book-item__genre"><b>Genre:</b> {{ book.genre.join(',') }}</p>
+                <p class="book-item__genre"><b>Genre:</b> {{ book.genre ? book.genre.join(',') : "" }}</p>
                 <p class="book-item__editorial"><b>Editorial:</b> {{ book.editorial }}</p>
                 <p class="book-item__language"><b>Language:</b> {{ book.language }}</p>
                 <p class="book-item__isbn"><b>ISBN:</b> {{ book.isbn }}</p>

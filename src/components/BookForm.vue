@@ -1,72 +1,60 @@
-<script>
+<script setup>
 import { Book } from "../models/book.js"
 import FormTextItem from "./FormItems/FormTextItem.vue"
 import FormNumberItem from "./FormItems/FormNumberItem.vue"
 import FormTextAreaItem from "./FormItems/FormTextAreaItem.vue"
 import FormCheckBoxItem from "./FormItems/FormCheckBoxItem.vue"
 import FormSelectItem from "./FormItems/FormSelectItem.vue"
-export default {
-    data() {
-        return {
-            form: new Book(),
-            ratingValues: [{
-                Value: "",
-                Description: "Not defined"
-            },{
-                Value: "1",
-                Description: "1 star"
-            },{
-                Value: "2",
-                Description: "2 stars"
-            },
-            {
-                Value: "3",
-                Description: "3 stars"
-            },
-            {
-                Value: "4",
-                Description: "4 stars"
-            },
-            {
-                Value: "5",
-                Description: "5 stars"
-            }],
-            languageValues: [{
-                Value: "",
-                Description: "Not defined"
-            },{
-                Value: "Spanish"
-            },{
-                Value: "English"
-            },{
-                Value: "French"
-            },{
-                Value: "Italian"
-            },{
-                Value: "German"
-            }],
-            displayError: false
-        }
-    },
-    components: {
-    FormTextItem,
-    FormNumberItem,
-    FormTextAreaItem,
-    FormCheckBoxItem,
-    FormSelectItem
+import { defineEmits, reactive } from 'vue'
+
+
+var form = new Book()
+var ratingValues = reactive([{
+    Value: "",
+    Description: "Not defined"
+}, {
+    Value: "1",
+    Description: "1 star"
+}, {
+    Value: "2",
+    Description: "2 stars"
 },
-    methods: {
-        submitForm() {
-            if(this.form.title && this.form.description && this.form.author && this.form.year)
-            {
-                this.displayError = false;
-                this.form.genre = this.form.genre.split(',').map((g) => g.trim())
-                this.$emit('add-book', this.form)
-                this.form = new Book()
-            }else{
-                this.displayError = true;
-            }
-        }
+{
+    Value: "3",
+    Description: "3 stars"
+},
+{
+    Value: "4",
+    Description: "4 stars"
+},
+{
+    Value: "5",
+    Description: "5 stars"
+}]);
+var languageValues = reactive([{
+    Value: "",
+    Description: "Not defined"
+}, {
+    Value: "Spanish"
+}, {
+    Value: "English"
+}, {
+    Value: "French"
+}, {
+    Value: "Italian"
+}, {
+    Value: "German"
+}]);
+var displayError = reactive(false);
+const emit = defineEmits(['add-book'])
+var submitForm = () => {
+    if (form.title && form.description && form.author && form.year) {
+        displayError = false;
+        form.genre = form.genre ? form.genre.split(',').map((g) => g.trim()) : ""
+        emit('add-book', form)
+        form = new Book()
+    } else {
+        displayError = true;
     }
 }
 </script>
@@ -146,7 +134,7 @@ export default {
     height: 100px;
 }
 
-.book-form:deep(.book-form__submit ){
+.book-form:deep(.book-form__submit) {
     padding: 10px;
     border: 1px solid #e5e5e5;
     border-radius: 4px;

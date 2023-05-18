@@ -1,8 +1,7 @@
-<script>
-export default {
-    props: ['modelValue', 'fieldName','selectorValues'],
-    emits: ['update:modelValue']
-}
+<script setup>
+import { defineEmits, defineProps } from 'vue';
+const emit = defineEmits(['update:modelValue'])
+const props = defineProps(['modelValue', 'fieldName','selectorValues'])
 </script>
 
 <template>

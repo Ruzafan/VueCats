@@ -1,7 +1,6 @@
-<script>
-export default { 
-    emits:['sort-items','order-items','favourite-items']
-}
+<script setup>
+import { defineEmits } from 'vue';
+const emit = defineEmits(['sort-items','order-items','favourite-items'])
 </script>
 <template>
     <div class="filter-bar">

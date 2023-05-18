@@ -1,31 +1,15 @@
 <template>
     <div class="search-bar">
-        <input type="text" placeholder="Search book" v-model="searchQuery" @input="search">
-        <button class="clear" @click="clearSearch">Clear</button>
-        <button class="add" @click="showForm">Add book</button>
+        <input type="text" placeholder="Search book" @input="$emit('search', $event.target.value)">
+        <button class="clear" @click="$emit('search', '')">Clear</button>
+        <button class="add" @click="$emit('show-form')">Add book</button>
     </div>
 </template>
   
-<script>
-export default {
-    data() {
-        return {
-            searchQuery: '',
-        }
-    },
-    methods: {
-        search() {
-            this.$emit('search', this.searchQuery);
-        },
-        clearSearch() {
-            this.searchQuery = '';
-            this.search();
-        },
-        showForm() {
-            this.$emit('show-form');
-        },
-    }
-}
+<script setup>
+import { defineEmits } from 'vue'
+
+const emit = defineEmits(['search', 'show-form'])
 </script>
   
 <style>
